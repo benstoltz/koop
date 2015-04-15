@@ -1,35 +1,57 @@
 {
   "name": "koop",
-  "private": true,
-  "version": "0.1.0",
-  "description": "an api for converting geojson data into Esri feature services",
+  "version": "2.1.1",
+  "description": "A node module/express middleware for converting GeoJSON to Esri Feature Services.",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test/models/ -t 20000",
+    "lint": "gulp",
+    "release": "gh-release"
+  },
+  "author": {
+    "name": "Chris Helm"
+  },
+  "license": "Apache-2.0",
   "dependencies": {
-    "express": "~4.0.0",
-    "request": "~2.27.0",
+    "async": "~0.9.0",
+    "aws-sdk": "~2.1.20",
+    "body-parser": "~1.12.2",
+    "config": "~1.12.0",
+    "connect-multiparty": "^1.2.5",
+    "esri-extent": "^1.1.0",
+    "esri-proj-codes": "^1.0.0",
+    "express": "~4.12.3",
+    "kue": "~0.8.12",
+    "lodash": "~3.6.0",
+    "mkdirp": "~0.5.0",
+    "mv": "~2.0.3",
     "node-fs": "~0.1.7",
-    "spawn-async": "0.0.1",
-    "bunyan": "~0.22.1",
+    "request": "~2.54.0",
+    "rimraf": "^2.3.2",
+    "sphericalmercator": "~1.0.3",
+    "sql-parser": "~0.5.0",
+    "terraformer": "1.0.5",
     "terraformer-arcgis-parser": "1.0.4",
     "terraformer-wkt-parser": "~1.0.0",
-    "sphericalmercator": "~1.0.2",
-    "topojson": "~1.4.3",
-    "lodash": "~2.4.1",
-    "peechee": "0.0.6",
-    "config": "~0.4.35",
-    "cors": "~2.2.0",
-    "response-time": "~1.0.0",
-    "yaml": "~0.2.3",
-    "ejs": "~1.0.0",
-    "body-parser": "1.0.2",
-    "koop-server": "https://github.com/Esri/koop-server/tarball/master",
-    "node.extend": "~1.0.10",
-    "pg": "~3.4.0"
+    "topojson": "~1.6.18",
+    "winston": "~0.9.0"
   },
-  "scripts": {
-    "start": "node server.js"
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Esri/koop.git"
   },
-  "main": "app.js",
-  "repository": "http://github.com/Esri/koop.git",
-  "author": "",
-  "license": "Apache"
+  "bugs": {
+    "url": "https://github.com/Esri/koop/issues"
+  },
+  "devDependencies": {
+    "gh-release": "^1.1.6",
+    "gulp": "^3.8.11",
+    "gulp-escomplex": "^1.0.1",
+    "gulp-escomplex-reporter-html": "^1.0.0",
+    "gulp-jshint": "^1.9.4",
+    "jshint": "~2.6.3",
+    "jshint-stylish": "^1.0.1",
+    "mocha": "^2.2.1",
+    "should": "~5.2.0"
+  }
 }
