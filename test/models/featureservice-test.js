@@ -35,7 +35,8 @@ describe('FeatureServices Model', function(){
       var input = {
         propInt: 10,
         propFloat:10.1,
-        propString:'Awesome'
+        propString:'Awesome',
+        propDate: 'Wed Jun 24 2015 08:18:24'
       };
       var fieldObj = fs.fields( input ),
         fields = fieldObj.fields;
@@ -57,10 +58,11 @@ describe('FeatureServices Model', function(){
             f.should.have.property('type');
             f.should.have.property('name');
             f.should.have.property('alias');
-          });
+          })
           fields[0].type.should.equal('esriFieldTypeInteger'); 
           fields[1].type.should.equal('esriFieldTypeDouble'); 
           fields[2].type.should.equal('esriFieldTypeString'); 
+          fields[3].type.should.equal('esriFieldTypeDate'); 
           done();
       });
     });
@@ -71,6 +73,43 @@ describe('FeatureServices Model', function(){
         //data.features[0].geometry.type = "Polygon";
         fs.info( polyData, 0, {}, function( err, service ){
           service.geometryType.should.equal("esriGeometryPolygon");
+          done();
+        });
+      });
+
+      it('should use the passed in extent if present', function(done){
+        polyData.extent = [1, 2, 3, 4]
+        fs.info( polyData, 0, {}, function( err, service ){
+          service.fullExtent[0].should.equal(1);
+          done();
+        });
+      });
+    });
+
+    describe('when getting feature counts from a given count', function(done){
+      it('should return a correct count json', function (done) {
+        fs.query( {count: 100}, {returnCountOnly: true}, function (err, json) {
+          should.not.exist(err)
+          json.count.should.equal(100);
+          done();
+        });
+      });
+    });
+
+    describe('when overriding params in a feature service', function(){
+      it('should return changed values', function(done){
+        var name = 'MyTestName',
+          desc = 'MyTestDesc';
+        var params = {
+          overrides: {
+            name: name,
+            description: desc
+          }
+        };
+        fs.info( data, 0, params, function( err, service ){
+          service.should.be.an.instanceOf(Object);
+          service.name.should.equal(name);
+          service.description.should.equal(desc);
           done();
         });
       });

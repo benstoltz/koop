@@ -2,6 +2,55 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.3.0] - 2015-07-02
+### Added
+* If a provider passes in a metadata value to the Exporter then it will be used to create a metadata xml file for only shp exports.
+* Added a `exportFile` method to BaseModel that providers a more simple interface to exporting methods. The goal will be to ultimately change the way `exportLarge` and `exportToFormat` are called by providers.  
+
+## [2.2.1] - 2015-06-29
+### Fixed 
+* Cleaned up the zip command in lib/Exporter.js
+* fixed removeShapefile to actually clean up after itself on zip/shp creation
+
+## [2.2.0] - 2015-06-24
+### Added 
+* Providers can optionally pass in an `overrides` property to the `processFeatureService` method on controllers. This allows a provider to manually override any templated values in the Feature Service response like names, descriptions, etc.
+* Tests for overriding properties
+* Tests passing in counts to FeatureServices when `returnCountOnly` is true
+* Added wrapper methods on the `lib/Cache.js` for missing cache methods
+* Added jsdocs to methods in `lib/Cache.js` 
+
+### Changed
+* Providers can now optionally pass in an extent that FeatureServices will use instead of looping over features 
+* If no config is passed in one will get created as an empty object. This protects koop from crashing with no config (#186).
+* Shapefile parts are deleted after being added to zip
+
+### Fixed
+* Zip exports no longer contain shapefile parts that do not belong
+* Ensuring that date fields are correctly cast as dates in FeatureServices
+
+## [2.1.12] - 2015-06-12
+### Changed 
+* Fixed typo bug with checking for expired caches when timers are set. s/checkthis/checkCache/g
+* Better logic around outSR when requesting 102100 as projected output
+* checking for codedValues on field.domains in the lib/GeoJSON - fixes a bug with numeric domains
+* All query model tests are running and passing
+
+### Fixed 
+* Correctly replacing LCC to address an ogr2ogr proj bug
+
+### Added 
+* A project roadmap for laying out upcoming versions and work we want to do in those versions
+
+## [2.1.11] - 2015-06-04
+### Changed
+* Local cache get info now returns error if info does not exist
+
+## [2.1.10] - 2015-06-02
+### Changed
+* adding an object id to the list of fields when its missing for CSV data
+* Files from S3 now get a the HEAD request data back when checking if files exist
+
 ## [2.1.9] - 2015-05-21
 ### Changed 
 * Sending any stored header/field lists to the featureserver code to support ordered fields coming from CSVs data.
@@ -244,6 +293,12 @@ Koop is now just a node module that exposes an express middleware app with hooks
   - koop-server is no more; all central code is in the koop project
   - to use Koop you must use it as middleware in an app that boots up an http server
 
+[2.3.0]: https://github.com/Esri/koop/compare/v2.2.1...v2.3.0
+[2.2.1]: https://github.com/Esri/koop/compare/v2.2.0...v2.2.1
+[2.2.0]: https://github.com/Esri/koop/compare/v2.1.12...v2.2.0
+[2.1.12]: https://github.com/Esri/koop/compare/v2.1.11...v2.1.12
+[2.1.11]: https://github.com/Esri/koop/compare/v2.1.10...v2.1.11
+[2.1.10]: https://github.com/Esri/koop/compare/v2.1.9...v2.1.10
 [2.1.9]: https://github.com/Esri/koop/compare/v2.1.8...v2.1.9
 [2.1.8]: https://github.com/Esri/koop/compare/v2.1.7...v2.1.8
 [2.1.7]: https://github.com/Esri/koop/compare/v2.1.6...v2.1.7
