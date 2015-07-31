@@ -11,19 +11,17 @@ function koopMap (dom) {
     remove: removeLayer
   }
 
-  map = L.map(dom).setView([45.52751668442124, -122.67175197601318], 3)
+  map = L.map(dom).setView([45.53, -122.67], 3)
   // Add ArcGIS Online Basemap
   L.esri.basemapLayer('NationalGeographic').addTo(map)
 
   function addLayer (url) {
     // Add ArcGIS Online feature service
-    layerFS = L.esri.featureLayer(url, {
+    layerFS = L.esri.featureLayer({
+      url: url,
       pointToLayer: function (geojson, latlng) {
         return L.marker(latlng, {
-          icon: L.icon({
-            iconUrl: '/images/marker-icon.png',
-            iconRetinaUrl: '/images/marker-icon-2x.png',
-            iconSize: [20, 30],
+          icon: new L.Icon.Default({
             iconAnchor: [10, 25],
             popupAnchor: [0, -20]
           })
@@ -85,4 +83,5 @@ function koopMap (dom) {
   return koop
 }
 
-if (module && module.exports) module.exports = koopMap
+// export if module is present
+if (typeof module !== 'undefined' && module.exports) module.exports = koopMap

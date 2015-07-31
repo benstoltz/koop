@@ -2,7 +2,31 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased](https://github.com/Esri/koop/compare/v2.5.1...HEAD)
+## [2.6.0] - 2015-07-30
+### Fixed
+* Parsing the logpath in `lib/Logger` needed to use slice instead of splice
+* Try to use latest WKID or WKID, whichever is available in esri-proj-codes
+
+### Added
+* Tests for new method `lib/Exporter.js:createIdFilter`
+
+### Changed
+* refactored preview to incorporate breaking changes in esri-leaflet 1.0.0
+* switched to using L.Icon.Default
+* refactored the idFilter logic into a shared method in Exporter `createIdFilter`
+* logic for returning files was calling the callback with an error and causes a double response on export requests
+
+### Removed
+* Leaflet image files
+
+## [2.5.3] - 2015-07-29
+### Fixed
+* Fixed module export bug in preview (koopMap) script
+
+### Added
+* Created `RELEASE.md` for release guidelines
+
+## [2.5.2] - 2015-07-28
 ### Added
 * Using [JavaScript Standard Style](https://github.com/feross/standard)
 
@@ -13,6 +37,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Removed
 * Deleted errant `pm2.json` file in `lib`
 * Removed unused TopoJSON support lib
+* Removed slashes from shapefile format in `lib/Exporter.js`
+
+### Changed
+* Moved repository from https://github.com/Esri/koop to https://github.com/koopjs/koop
 
 ## [2.5.1] - 2015-07-16
 ### Fixed
@@ -336,6 +364,9 @@ Koop is now just a node module that exposes an express middleware app with hooks
   - koop-server is no more; all central code is in the koop project
   - to use Koop you must use it as middleware in an app that boots up an http server
 
+[2.6.0]: https://github.com/Esri/koop/compare/v2.5.3...v2.6.0
+[2.5.3]: https://github.com/Esri/koop/compare/v2.5.2...v2.5.3
+[2.5.2]: https://github.com/Esri/koop/compare/v2.5.1...v2.5.2
 [2.5.1]: https://github.com/Esri/koop/compare/v2.5.0...v2.5.1
 [2.5.0]: https://github.com/Esri/koop/compare/v2.4.2...v2.5.0
 [2.4.2]: https://github.com/Esri/koop/compare/v2.4.1...v2.4.2
