@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## Unreleased
+### Added
+* `plugin` method for accessing plugins via BaseModel ([#226](https://github.com/koopjs/koop/pull/226))
+
+### Fixed
+* Reuse json stored locally on geojson requests
+* Removed unused TopoJSON artifacts
+
 ## [2.6.0] - 2015-07-30
 ### Fixed
 * Parsing the logpath in `lib/Logger` needed to use slice instead of splice
