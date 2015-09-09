@@ -4,6 +4,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 ### Changed
+* refactor `lib/Query` (no more `this`)
+* add jsdoc to BaseModel, FeatureServices, Query
+
+## [2.7.0] - 2015-09-02
+### Changed
 * `lib/Files` now takes `options` instead of `koop` (only needed koop.config and koop.log)
 * cleaned up `app.register` method logic
   * `app.register` can now register caches and plugins if `type` is specified correctly
@@ -13,6 +18,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * reorganized index for readability & code organization
 * consolidated koop, lib, app ([#237](https://github.com/koopjs/koop/issues/237))
 * logging version and mountpath when express middleware is mounted
+* broke out `lib/SpatialReference` into [format-spatial-ref](https://github.com/koopjs/format-spatial-ref)
+* 64% speedup in converting esri json to geojson ([#242](https://github.com/koopjs/koop/pull/242))
 
 ### Added
 * `app.registerProvider` method for providers
@@ -392,6 +399,7 @@ Koop is now just a node module that exposes an express middleware app with hooks
   - koop-server is no more; all central code is in the koop project
   - to use Koop you must use it as middleware in an app that boots up an http server
 
+[2.7.0]: https://github.com/koopjs/koop/compare/v2.6.2...v2.7.0
 [2.6.2]: https://github.com/koopjs/koop/compare/v2.6.1...v2.6.2
 [2.6.1]: https://github.com/koopjs/koop/compare/v2.6.0...v2.6.1
 [2.6.0]: https://github.com/koopjs/koop/compare/v2.5.3...v2.6.0
