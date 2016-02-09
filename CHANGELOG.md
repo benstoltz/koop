@@ -2,10 +2,151 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## Unreleased
+## [2.12.1] - 2015-12-29
+### Fixed
+* Layer defaults to 0 when not specified when selecting features
+
+## [2.12.0] - 2015-12-29
+### Added
+* New methods `files.createReadStream` & `files.createWriteStream` read/write from local disk or S3
+* New methood `cache.createStream` creates a stream that emits 1 feature at a time from the cache
+
+## [2.11.0] - 2015-12-03
+### Added
+* Support for adding indexes to a feature table
+
+## [2.10.5] - 2015-11-19
+### Fixed
+* Return when calling back with an error in `local/getInfo`
+
+## [2.10.4] - 2015-11-18
 ### Changed
-* refactor `lib/Query` (no more `this`)
-* add jsdoc to BaseModel, FeatureServices, Query
+* Increase logging of errors in export worker
+
+## [2.10.3] - 2015-11-10
+### Fixed
+* Remove 3 causes of unhandled exceptions in lib/geojson
+
+## [2.10.2] - 2015-11-10
+### Fixed
+* Clean up file on local disk after single page export
+
+## [2.10.1] - 2015-11-06
+### Fixed
+* Better wkt for SRID 5514
+
+## [2.10.0] - 2015-11-06
+### Added
+* Support for copying files from one folder to another on the local filesystem or S3
+* Log error when uploading or copying to S3 fails
+
+### Changed
+* Handle saving exported files to S3 outside of the job process, so they can happen concurrently
+* Export workers take on new jobs as soon as they have finished OGR
+* Using the S3 managed uploader -> multipart uploads with built-in retrying
+* Retry upload to S3 one time if it fails
+* Copy exported files to latest path instead of uploading
+* Removed unnecessary test files
+
+## [2.9.5] - 2015-11-05
+### Changed
+* Set supportsOrderBy on feature service to false. The implementation is flawed
+
+### Fixed
+* Error messages are saved correctly when export jobs fail
+* Hard-code correct WKT for SRID 5514
+
+## [2.9.4] - 2015-11-04
+### Fixed
+* Job progress is always set to 100% on completion
+* Removed cause of unhandled exception when deleting files from S3
+
+## [2.9.3] - 2015-11-02
+### Fixed
+* Null date fields are no longer set to 1970
+* Projections changes are added to OGR call
+
+## [2.9.2] - 2015-10-14
+### Changed
+* Roll back change made to support geoservices. Koop-pgcache is not ready to handle sorting on its own.
+
+## [2.9.1] - 2015-10-14
+### Fixed
+* Progress is reported correctly for single page export jobs
+
+## [2.9.0] - 2015-10-12
+### Changed
+* Resources are no longer set to `processing` when export jobs are running.
+* Resources have progress reported on specific option keys
+* Export generation locks are set only on specific option keys instead of the entire resource
+* New class handles export job creation
+* Broke ExportWorker into multiple subjobs
+* Queue creation logic is moved out of the index
+* The ExportWorker only updates the DB if the job failed
+* All ExportWorker errors are saved to the resource info doc.
+
+### Fixed
+* Typo no longer prevents s3 filesystem from initializing
+
+## [2.8.6] - 2015-10-01
+### Fixed
+* LocalDB `select` method now works properly if `options.layer` is omitted or included in key string
+
+### Removed
+* removed `processing` status from LocalDB
+
+## [2.8.5] - 2015-09-24
+### Fixed
+* catch omission of `new` keyword for `koop.Files`
+* Gracefully handle malformed esri geoms in geojson conversion
+* Revert Windows command line escaping, it was done improperly
+* Always tranform datum for NAD83 exports
+* No longer setting a display field that doesnt exist (or any display field at all)
+
+## [2.8.4] - 2015-09-24
+### Fixed
+* Fix path to json part 0
+
+## [2.8.3] - 2015-09-23
+### Removed
+* Got rid of gulp and its dependencies (no longer in use)
+
+### Fixed
+* Export Workers send geojson to callOgr so it can properly infer feature type
+
+## [2.8.2] - 2015-09-21
+### Changed
+* Travis tests against stable Node
+
+### Fixed
+* Set geometry type on export when there is no srid
+* Never overwrrite existing X or Y fields in CSV
+* CSV is now written with geometry fields even if first geometry is null
+* No longer throwing an execption on datasets with no geometry at all
+
+## [2.8.1] - 2015-09-18
+### Fixed
+* Better test and support for null geometry in exports
+
+## [2.8.0] - 2015-09-18
+### Fixed
+* Don't include vrt files in shapefile zips
+* OGR2OGR calls with projections use double quotes for Windows compatibility
+* Shapefiles are no longer written with null geometry when the first feature's geometry is null
+
+### Changed
+* Refactored projection support to use [spatialreference](http://github.com/koopjs/spatialreference)
+* Refactored export logic for csv and shapefiles into separate functions
+
+## [2.7.2] - 2015-09-16
+### Fixed
+* Fix regression in overwriting 2927 WKT string
+
+## [2.7.1] - 2015-09-10
+### Changed
+* refactored `lib/FeatureServices` & `lib/Query` (no more `this`)
+* added jsdoc to some lib files (BaseModel, FeatureServices, Query, GeoJSON, Logger)
+* does sorting in the DB where available
 
 ## [2.7.0] - 2015-09-02
 ### Changed
@@ -399,6 +540,30 @@ Koop is now just a node module that exposes an express middleware app with hooks
   - koop-server is no more; all central code is in the koop project
   - to use Koop you must use it as middleware in an app that boots up an http server
 
+[2.12.1]: https://github.com/koopjs/koop/compare/v2.12.0...v2.12.1
+[2.12.0]: https://github.com/koopjs/koop/compare/v2.11.0...v2.12.0
+[2.11.0]: https://github.com/koopjs/koop/compare/v2.10.5...v2.11.0
+[2.10.5]: https://github.com/koopjs/koop/compare/v2.10.4...v2.10.5
+[2.10.4]: https://github.com/koopjs/koop/compare/v2.10.3...v2.10.4
+[2.10.3]: https://github.com/koopjs/koop/compare/v2.10.2...v2.10.3
+[2.10.2]: https://github.com/koopjs/koop/compare/v2.10.1...v2.10.2
+[2.10.1]: https://github.com/koopjs/koop/compare/v2.10.0...v2.10.1
+[2.10.0]: https://github.com/koopjs/koop/compare/v2.9.5...v2.10.0
+[2.9.5]: https://github.com/koopjs/koop/compare/v2.9.4...v2.9.5
+[2.9.4]: https://github.com/koopjs/koop/compare/v2.9.3...v2.9.4
+[2.9.3]: https://github.com/koopjs/koop/compare/v2.9.2...v2.9.3
+[2.9.2]: https://github.com/koopjs/koop/compare/v2.9.1...v2.9.2
+[2.9.1]: https://github.com/koopjs/koop/compare/v2.9.0...v2.9.1
+[2.9.0]: https://github.com/koopjs/koop/compare/v2.8.6...v2.9.0
+[2.8.6]: https://github.com/koopjs/koop/compare/v2.8.5...v2.8.6
+[2.8.5]: https://github.com/koopjs/koop/compare/v2.8.4...v2.8.5
+[2.8.4]: https://github.com/koopjs/koop/compare/v2.8.3...v2.8.4
+[2.8.3]: https://github.com/koopjs/koop/compare/v2.8.2...v2.8.3
+[2.8.2]: https://github.com/koopjs/koop/compare/v2.8.1...v2.8.2
+[2.8.1]: https://github.com/koopjs/koop/compare/v2.7.2...v2.8.1
+[2.8.0]: https://github.com/koopjs/koop/compare/v2.7.2...v2.8.0
+[2.7.2]: https://github.com/koopjs/koop/compare/v2.7.1...v2.7.2
+[2.7.1]: https://github.com/koopjs/koop/compare/v2.7.0...v2.7.1
 [2.7.0]: https://github.com/koopjs/koop/compare/v2.6.2...v2.7.0
 [2.6.2]: https://github.com/koopjs/koop/compare/v2.6.1...v2.6.2
 [2.6.1]: https://github.com/koopjs/koop/compare/v2.6.0...v2.6.1
